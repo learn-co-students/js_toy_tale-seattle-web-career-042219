@@ -19,7 +19,7 @@ function displayToys(toys) {
 
 function displayToy(toy) {
   let div = document.createElement('div')
-  div.id = 'card'
+  div.class = 'card'
   let h2 = document.createElement('h2')
   h2.textContent = toy.name
   let img = document.createElement('img')
@@ -28,11 +28,12 @@ function displayToy(toy) {
 
   let like = document.createElement('p')
   like.textContent = "likes: " + toy.likes
-  like.id = toy.id
+  like.id = "like-" + toy.id;
 
 
   let likeBtn = document.createElement('button')
   likeBtn.innerHTML = "Like"
+  likeBtn.id = toy.id;
 
   let collection = document.getElementById('toy-collection')
   collection.appendChild(div)
@@ -41,28 +42,29 @@ function displayToy(toy) {
   div.appendChild(like)
   div.appendChild(likeBtn)
 
-  likeBtn.addEventListener('click', (ev) => {
-    let likeHtml = document.getElementById(`${toy.id}`)
-    let currentLikes = likeHtml.textContent.split(" ")[1]
-    console.log(currentLikes)
-
-
-    fetch(`http://localhost:3000/toys/${toy.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({"likes": parseInt(currentLikes) + 1})
-    })
-    .then(res => res.json())
-    .then(json => updateLikes(json))
-  })
-
+  likeBtn.addEventListener('click', pLike);
 
 }
 
+function pLike(ev) {
+  console.log(ev);
+  let likeHtml = document.getElementById(`like-${ev.target.id}`)
+  let currentLikes = likeHtml.textContent.split(" ")[1];
+
+
+  fetch(`http://localhost:3000/toys/${ev.target.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({"likes": parseInt(currentLikes) + 1})
+   })
+   .then(res => res.json())
+   .then(json => updateLikes(json))
+}
+
 function updateLikes(toyObj) {
-  let likes = document.getElementById(`${toyObj.id}`)
+  let likes = document.getElementById(`like-${toyObj.id}`)
   likes.textContent = "likes: " + toyObj.likes
 
 }
