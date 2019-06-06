@@ -97,3 +97,8 @@ button:hover {
   font-family: monospace;
   margin: 3px;
 }
+
+.like-btn {
+  height: 23px;
+  font-size: 13px;
+}
