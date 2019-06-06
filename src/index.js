@@ -1,19 +1,38 @@
-const addBtn = document.querySelector('#new-toy-btn')
-const toyForm = document.querySelector('.container')
-let addToy = false
+// Add your code here
+const URL = 'http://localhost:3000/users';
 
-// YOUR CODE HERE
-
-addBtn.addEventListener('click', () => {
-  // hide & seek with the form
-  addToy = !addToy
-  if (addToy) {
-    toyForm.style.display = 'block'
-    // submit listener here
-  } else {
-    toyForm.style.display = 'none'
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  main();
 })
 
+function main() {
+  attachListeners();
+}
 
-// OR HERE!
+function attachListeners() {
+  let form = document.getElementById("form");
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    submitData(event.target.elements);
+  })
+}
+
+function submitData(formInputs) {
+  let name = formInputs['name'].value;
+  let email = formInputs['email'].value;
+
+
+
+  fetch(URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({name: name, email: email})
+  })
+  .then(res => {
+    return res.json()
+  })
+  .then(json => {
+  })
+}
