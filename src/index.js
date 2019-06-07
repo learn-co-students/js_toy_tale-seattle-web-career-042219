@@ -24,7 +24,6 @@ const realForm = document.querySelector(".add-toy-form");
 realForm.addEventListener("submit", postCall);
 document.addEventListener("DOMContentLoaded", function() {
   getCall();
-  // addEventListener();
 });
 
 function getCall() {
@@ -68,7 +67,6 @@ function renderToy(toy) {
 }
 
 function postCall(event) {
-  console.log("postCall fires");
   event.preventDefault();
   let inputs = document.querySelectorAll(".input-text");
   let name = inputs[0].value;
@@ -91,11 +89,8 @@ function postCall(event) {
 
 function addLike(toy, likesEl) {
   let id = toy.id;
-  let likes = toy.likes;
+  let likes = parseInt(likesEl.innerText, 10);
   likes++;
-
-  console.log("likes=", likes);
-  console.log("id=", id);
 
   fetch(toyUrl + "/" + id, {
     method: "PATCH",
@@ -110,7 +105,7 @@ function addLike(toy, likesEl) {
     })
     .then(toy => {
       likesEl.innerText = `${likes} likes`;
-      toy.likes++;
+      toy.likes = likes;
     })
     .catch(err => console.log(err));
 }
