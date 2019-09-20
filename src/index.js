@@ -48,6 +48,7 @@ function renderToy(toy) {
   let img = document.createElement("img");
   let pLikes = document.createElement("p");
   let button = document.createElement("button");
+  button.setAttribute("class","like-btn")
 
   div.classList.add("card");
   div.appendChild(pID);
